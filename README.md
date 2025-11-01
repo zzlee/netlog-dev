@@ -31,6 +31,25 @@ To set up and run the project locally, follow these steps:
     npx wrangler dev
     ```
 
+## Frontend Details
+
+The frontend is a single-page application built with React and TypeScript, styled with Bootstrap 5 and Bootstrap Icons. It provides a dashboard to view and create event logs.
+
+### Features:
+
+-   **Event Dashboard:** Displays a list of event logs.
+    -   **Event Source Selection:** A dropdown menu at the top allows filtering event logs by specific event sources or viewing all events.
+        -   The default selection is "* All Events", showing all logs sorted by timestamp (descending).
+    -   **Event Log Table:** Event logs are presented in a clean, tabular format with "日期時間" and "事件內容" columns.
+-   **Create Event:** A modal window allows users to create new event logs without navigating away from the event list.
+    -   Click the `+` icon next to "Event Dashboard" to open the creation modal.
+    -   After successful creation or cancellation, the modal closes, and the event list automatically refreshes.
+
+### How to Interact:
+
+-   **View Events:** On the main page, use the "Select Event Source:" dropdown to filter logs. The default view shows all events.
+-   **Create Event:** Click the `+` icon next to the "Event Dashboard" title. Fill in the "Event Source Name" and "Event Content" in the modal, then click "Create Event". The list will refresh automatically.
+
 ## Backend Details
 
 The backend is built with Cloudflare Workers, utilizing TypeScript and the Hono.js web framework. It interacts with Cloudflare D1 for database operations.
@@ -87,3 +106,22 @@ The backend exposes the following API endpoints:
     -   **Description:** Retrieves all event logs for a specific event source, ordered by timestamp in descending order.
     -   **Response:** `Array<{ "id": number, "event_source_id": number, "timestamp": "string", "content": "string", "event_source_name": "string" }>`
 
+## Scripts
+
+The `scripts` directory contains various shell scripts for interacting with the backend API, primarily for testing and management purposes. These scripts use `curl` to send HTTP requests and `jq` for parsing JSON responses.
+
+### Available Scripts:
+
+-   `create_event_source.sh`: Creates new event sources.
+-   `get_all_event_sources.sh`: Retrieves all event sources.
+-   `get_event_source_by_id.sh`: Retrieves a specific event source by ID.
+-   `create_event_log.sh`: Creates new event logs.
+-   `get_all_event_logs.sh`: Retrieves all event logs.
+-   `get_event_log_by_id.sh`: Retrieves a specific event log by ID.
+-   `get_event_logs_by_source_id.sh`: Retrieves event logs for a specific event source ID.
+-   `manage_events.sh`: A utility script with the following functions:
+    -   `list-by-name <event_source_name>`: Lists all event logs for a given event source name.
+    -   `create <event_source_name> <event_content>`: Creates a new event log.
+    -   `list-all`: Lists all event logs in a formatted table.
+
+**Note:** Ensure `jq` is installed on your system to properly parse JSON output from these scripts.
