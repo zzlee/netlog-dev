@@ -98,7 +98,7 @@ app.post('/event-logs', async (c) => {
     }
 
     const eventSource = await getOrCreateEventSource(c.env.DB, event_source_name);
-    const timestamp = new Date().toUTCString();
+    const timestamp = new Date().toISOString();
 
     const insertResult = await c.env.DB.prepare("INSERT INTO event_logs (event_source_id, timestamp, content) VALUES (?, ?, ?)")
       .bind(eventSource.id, timestamp, content)
